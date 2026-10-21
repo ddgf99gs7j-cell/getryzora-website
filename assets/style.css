@@ -155,3 +155,14 @@ summary{cursor:pointer;font-weight:600}details p{margin:10px 0 0;color:var(--mut
 .reveal.in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}.phone{transition:none}}
 .no-js .reveal{opacity:1;transform:none}
+/* Premium compositions (19 Oct 2026): the real screenshots in device frames; CSS crops the composition's empty half and
+   fades its edges into the section, so the text beside it stays HTML at every width. */
+.art{position:relative;width:100%;aspect-ratio:1344/1500;overflow:hidden;
+  --fade-x:linear-gradient(to right,transparent,#000 24%,#000 95%,transparent);--fade-y:linear-gradient(transparent,#000 14%,#000 86%,transparent);
+  -webkit-mask-image:var(--fade-x),var(--fade-y);-webkit-mask-composite:source-in;mask-image:var(--fade-x),var(--fade-y);mask-composite:intersect}
+.art.left{--fade-x:linear-gradient(to left,transparent,#000 24%,#000 95%,transparent)}
+.art img{width:100%;height:100%;object-fit:cover;object-position:100% 50%;display:block}
+.art.left img{object-position:14% 50%}
+.split.wide .art{width:560px;max-width:100%}
+@media (max-width:1180px){.split.wide .art{width:480px}}
+@media (max-width:900px){.art{max-width:520px;margin:0 auto}.split.wide .art{width:100%}}
