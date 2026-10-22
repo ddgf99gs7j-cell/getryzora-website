@@ -125,7 +125,7 @@ a.card:hover{transform:translateY(-3px);border-color:rgba(255,159,28,.35);box-sh
 .plan{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:24px;padding:30px;display:flex;flex-direction:column}
 .plan.pro{border-color:rgba(255,159,28,.45);box-shadow:0 30px 80px -40px rgba(255,159,28,.5)}
 .plan .tag{position:absolute;top:-12px;right:22px;background:var(--grad);color:#0B0D12;font-size:12px;font-weight:700;padding:5px 12px;border-radius:999px}
-.plan h3{font-size:22px}.plan .price{font-size:30px;font-weight:750;margin:14px 0 2px}.plan .price small{font-size:15px;color:var(--muted);font-weight:500}
+.plan h3{font-size:22px}.plan .price{font-size:30px;font-weight:750;margin:14px 0 2px}.plan .price small{font-size:15px;color:var(--muted);font-weight:500;display:inline-block;line-height:1.45}
 .plan .checks{margin-bottom:24px}.plan .pill{margin-top:auto;justify-content:center}
 .fine{color:var(--muted);font-size:13.5px;margin-top:22px}
 
@@ -166,3 +166,13 @@ summary{cursor:pointer;font-weight:600}details p{margin:10px 0 0;color:var(--mut
 .split.wide .art{width:560px;max-width:100%}
 @media (max-width:1180px){.split.wide .art{width:480px}}
 @media (max-width:900px){.art{max-width:520px;margin:0 auto}.split.wide .art{width:100%}}
+/* Phones (22 Oct 2026, Tristan: "halve afbeeldingen"): a narrower window centred on each composition's main phone, soft
+   edges on both sides, so the main phone is always whole and the side phones fade out instead of being cut off. */
+@media (max-width:640px){
+  .art,.art.left{aspect-ratio:840/1500;max-width:300px;
+    --fade-x:linear-gradient(to right,transparent,#000 20%,#000 80%,transparent);--fade-y:linear-gradient(transparent,#000 10%,#000 90%,transparent)}
+  .art img[src*="-hero"]{object-position:87.5% 50%}
+  .art img[src*="-wake"]{object-position:86.3% 50%}
+  .art img[src*="-sleep"]{object-position:37.8% 50%}
+  .art img[src*="-insights"]{object-position:91.7% 50%}
+}
