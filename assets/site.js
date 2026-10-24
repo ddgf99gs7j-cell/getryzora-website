@@ -7,6 +7,10 @@ const btn = document.querySelector(".menu-btn"), links = document.querySelector(
 if (btn && links) btn.addEventListener("click", () => {
   const open = links.classList.toggle("open"); btn.setAttribute("aria-expanded", String(open));
 });
+// close the mobile menu after choosing a link (same-page links such as #guided-sleep would otherwise leave it open)
+if (btn && links) links.addEventListener("click", ev => {
+  if (ev.target.closest("a")) { links.classList.remove("open"); btn.setAttribute("aria-expanded", "false"); }
+});
 const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const items = document.querySelectorAll(".reveal");
 if (reduce || !("IntersectionObserver" in window)) items.forEach(e => e.classList.add("in"));

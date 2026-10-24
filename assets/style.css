@@ -36,6 +36,8 @@ img{max-width:100%;display:block}a{color:var(--accent-hi)}a:hover{color:#fff}
   .menu-btn{display:block}.links{display:none;position:absolute;top:68px;left:0;right:0;flex-direction:column;align-items:flex-start;gap:4px;
     background:rgba(11,13,18,.97);border-bottom:1px solid var(--line);padding:12px 20px 20px}
   .links.open{display:flex}.links a{font-size:16px;padding:8px 0}.links .pill{margin-top:8px}
+  /* Tap targets (25 Oct 2026): Menu button, menu links and EN/NL switch at least 44 px */
+  .menu-btn{min-height:44px;min-width:44px;padding:10px 14px}.links a{padding:10px 0}.links .lang a{padding:10px 18px}
 }
 
 /* Sections */
@@ -138,10 +140,14 @@ footer{border-top:1px solid var(--line);padding:44px 0 56px;color:var(--muted);f
 footer .cols{display:flex;gap:40px;flex-wrap:wrap;justify-content:space-between}
 footer nav{display:flex;gap:22px;flex-wrap:wrap}footer a{color:var(--muted);text-decoration:none}footer a:hover{color:var(--fg)}
 footer .legal{margin-top:24px;font-size:13px;line-height:1.7}
+/* Tap targets (24 Oct 2026): footer links 44 px high; inline links in running text get a taller hit area without moving the text.
+   Touch widths only (25 Oct): the desktop footer stays exactly as it was. */
+@media (max-width:860px){footer nav{gap:0 22px}footer nav a{display:inline-block;padding:11px 0}
+  footer .legal a,.fine a{padding:14px 0}footer .brand{padding:5px 0}}
 
 /* Text pages */
 .page{padding:64px 0 40px}.page .wrap{max-width:820px}
-.page h1{font-size:clamp(30px,5vw,52px);hyphens:auto;overflow-wrap:break-word}.page h2{font-size:24px;margin:40px 0 10px}.page p,.page li{color:#D6DAE1}
+.page h1{font-size:clamp(30px,5vw,52px);-webkit-hyphens:auto;hyphens:auto;overflow-wrap:break-word}.page h2{font-size:24px;margin:40px 0 10px}.page p,.page li{color:#D6DAE1}
 .page .meta{color:var(--muted);font-size:14px;margin-top:10px}
 .box{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;margin:20px 0}
 details{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:10px 0}
@@ -158,21 +164,31 @@ summary{cursor:pointer;font-weight:600}details p{margin:10px 0 0;color:var(--mut
 /* Premium compositions (19 Oct 2026): the real screenshots in device frames; CSS crops the composition's empty half and
    fades its edges into the section, so the text beside it stays HTML at every width. */
 .art{position:relative;width:100%;aspect-ratio:1344/1500;overflow:hidden;
-  --fade-x:linear-gradient(to right,transparent,#000 24%,#000 95%,transparent);--fade-y:linear-gradient(transparent,#000 14%,#000 86%,transparent);
+  --fade-x:linear-gradient(to right,transparent,#000 24%,#000 82%,transparent);--fade-y:linear-gradient(transparent,#000 14%,#000 86%,transparent);
   -webkit-mask-image:var(--fade-x),var(--fade-y);-webkit-mask-composite:source-in;mask-image:var(--fade-x),var(--fade-y);mask-composite:intersect}
-.art.left{--fade-x:linear-gradient(to left,transparent,#000 24%,#000 95%,transparent)}
+.art.left{--fade-x:linear-gradient(to left,transparent,#000 24%,#000 82%,transparent)}
 .art img{width:100%;height:100%;object-fit:cover;object-position:100% 50%;display:block}
 .art.left img{object-position:14% 50%}
 .split.wide .art{width:560px;max-width:100%}
 @media (max-width:1180px){.split.wide .art{width:480px}}
-@media (max-width:900px){.art{max-width:520px;margin:0 auto}.split.wide .art{width:100%}}
-/* Phones (22 Oct 2026, Tristan: "halve afbeeldingen"): a narrower window centred on each composition's main phone, soft
-   edges on both sides, so the main phone is always whole and the side phones fade out instead of being cut off. */
+@media (max-width:900px){.art{max-width:520px;margin:0 auto}.split.wide .art{width:100%;max-width:520px}}
+/* Phones (24 Oct 2026, Tristan: "halve telefoons, grote lege stukken"): each composition is cropped to a window around its
+   main phone only (--ax/--ay/--aw/--ah, in pixels of the 2400×1500 image), with a thin soft edge. The main phone is always
+   whole, no sliced side phones or half-legible text, and the empty bands above and below are gone. */
 @media (max-width:640px){
-  .art,.art.left{aspect-ratio:840/1500;max-width:300px;
-    --fade-x:linear-gradient(to right,transparent,#000 20%,#000 80%,transparent);--fade-y:linear-gradient(transparent,#000 10%,#000 90%,transparent)}
-  .art img[src*="-hero"]{object-position:87.5% 50%}
-  .art img[src*="-wake"]{object-position:86.3% 50%}
-  .art img[src*="-sleep"]{object-position:37.8% 50%}
-  .art img[src*="-insights"]{object-position:91.7% 50%}
+  section{padding:56px 0}
+  .hero{padding:40px 0 24px}
+  .split{gap:32px}
+  .art,.art.left,.split.wide .art{aspect-ratio:var(--aw)/var(--ah);width:calc(var(--aw)*.42px);max-width:100%;margin:0 auto;
+    --fade-x:linear-gradient(to right,transparent 2.5%,#000 6.5%,#000 93.5%,transparent 97.5%);--fade-y:linear-gradient(transparent,#000 4%,#000 96%,transparent)}
+  .art img,.art.left img{position:absolute;max-width:none;width:calc(2400/var(--aw)*100%);height:calc(1500/var(--ah)*100%);
+    left:calc(var(--ax)/var(--aw)*-100%);top:calc(var(--ay)/var(--ah)*-100%)}
+  /* the Sleep phone is tilted: the soft edge follows its frame, so the sessions phone behind it does not show */
+  .art.left.a-sleep{--fade-x:linear-gradient(96deg,transparent 15%,#000 18.8%,#000 81.5%,transparent 86.5%)}
+  .plan .price{line-height:1.2}.plan .price small{display:block;margin-top:4px}
+  .night{padding-top:96px}.moon{top:26px;right:22px;width:48px;height:48px}   /* moon above the Sleep phone, not on it */
 }
+.art,.art.a-hero{--ax:1470;--ay:99;--aw:633;--ah:1218}
+.art.a-wake{--ax:1474;--ay:122;--aw:584;--ah:1125}
+.art.a-sleep{--ax:662;--ay:287;--aw:672;--ah:1134}
+.art.a-insights{--ax:1458;--ay:92;--aw:732;--ah:1319}
