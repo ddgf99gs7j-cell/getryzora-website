@@ -172,23 +172,19 @@ summary{cursor:pointer;font-weight:600}details p{margin:10px 0 0;color:var(--mut
 .split.wide .art{width:560px;max-width:100%}
 @media (max-width:1180px){.split.wide .art{width:480px}}
 @media (max-width:900px){.art{max-width:520px;margin:0 auto}.split.wide .art{width:100%;max-width:520px}}
-/* Phones (24 Oct 2026, Tristan: "halve telefoons, grote lege stukken"): each composition is cropped to a window around its
-   main phone only (--ax/--ay/--aw/--ah, in pixels of the 2400×1500 image), with a thin soft edge. The main phone is always
-   whole, no sliced side phones or half-legible text, and the empty bands above and below are gone. */
+/* Phones (26 Oct 2026, Tristan: "half afgesneden, niet clean"): no phone is ever cropped. .whole = an image whose phones
+   are all complete (hero, wake), shown as is without the edge fade; at ≤640 px every section shows one whole upright phone
+   (<picture> source), sized so the complete device fits the screen. */
+.art.whole{-webkit-mask-image:none;mask-image:none}
+.art.whole img{object-fit:contain}
+.art picture{display:contents}
+@media (max-width:900px){.split,.hero .split,.split.wide{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:640px){
   section{padding:56px 0}
   .hero{padding:40px 0 24px}
   .split{gap:32px}
-  .art,.art.left,.split.wide .art{aspect-ratio:var(--aw)/var(--ah);width:calc(var(--aw)*.42px);max-width:100%;margin:0 auto;
-    --fade-x:linear-gradient(to right,transparent 2.5%,#000 6.5%,#000 93.5%,transparent 97.5%);--fade-y:linear-gradient(transparent,#000 4%,#000 96%,transparent)}
-  .art img,.art.left img{position:absolute;max-width:none;width:calc(2400/var(--aw)*100%);height:calc(1500/var(--ah)*100%);
-    left:calc(var(--ax)/var(--aw)*-100%);top:calc(var(--ay)/var(--ah)*-100%)}
-  /* the Sleep phone is tilted: the soft edge follows its frame, so the sessions phone behind it does not show */
-  .art.left.a-sleep{--fade-x:linear-gradient(96deg,transparent 15%,#000 18.8%,#000 81.5%,transparent 86.5%)}
+  .art,.art.left,.split.wide .art{aspect-ratio:900/1600;width:300px;max-width:100%;margin:0 auto;-webkit-mask-image:none;mask-image:none}
+  .art img,.art.left img{object-fit:contain;object-position:50% 50%}
   .plan .price{line-height:1.2}.plan .price small{display:block;margin-top:4px}
   .night{padding-top:96px}.moon{top:26px;right:22px;width:48px;height:48px}   /* moon above the Sleep phone, not on it */
 }
-.art,.art.a-hero{--ax:1470;--ay:99;--aw:633;--ah:1218}
-.art.a-wake{--ax:1474;--ay:122;--aw:584;--ah:1125}
-.art.a-sleep{--ax:662;--ay:287;--aw:672;--ah:1134}
-.art.a-insights{--ax:1458;--ay:92;--aw:732;--ah:1319}
