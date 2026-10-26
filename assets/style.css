@@ -34,10 +34,12 @@ img{max-width:100%;display:block}a{color:var(--accent-hi)}a:hover{color:#fff}
 .menu-btn{display:none;margin-left:auto;background:none;border:1px solid var(--line);color:var(--fg);border-radius:10px;padding:8px 10px;font:inherit;font-size:14px}
 @media (max-width:860px){
   .menu-btn{display:block}.links{display:none;position:absolute;top:68px;left:0;right:0;flex-direction:column;align-items:flex-start;gap:4px;
-    background:rgba(11,13,18,.97);border-bottom:1px solid var(--line);padding:12px 20px 20px}
+    background:var(--bg);border-bottom:1px solid var(--line);padding:12px 20px 20px}
   .links.open{display:flex}.links a{font-size:16px;padding:8px 0}.links .pill{margin-top:8px}
   /* Tap targets (25 Oct 2026): Menu button, menu links and EN/NL switch at least 44 px */
   .menu-btn{min-height:44px;min-width:44px;padding:10px 14px}.links a{padding:10px 0}.links .lang a{padding:10px 18px}
+  /* Open menu (26 Oct 2026): panel and sticky header fully opaque, so no page text shows through */
+  .nav.menu-open{background:var(--bg);-webkit-backdrop-filter:none;backdrop-filter:none;border-color:var(--line);transition:none}
 }
 
 /* Sections */
